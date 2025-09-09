@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Puzzle de Amor</title>
+  <style>
+    body { font-family: Arial; text-align: center; background: #fff8f8; }
+    h1 { color: #c2185b; }
+    #puzzle { display: grid; grid-template-columns: repeat(3,100px); grid-template-rows: repeat(3,100px); gap:2px; margin:20px auto; width:306px; height:306px; display: none; }
+    .pieza { width:100px; height:100px; background-size:300px 300px; cursor: grab; }
+    #final { display: none; padding:30px; font-family: Arial; }
+    #final h1 { font-size:40px; color:#c2185b; }
+    #final p { font-size:22px; color:#444; }
+    #final button { padding:10px 20px; font-size:18px; margin-top:20px; cursor:pointer; }
+    #completarBtn, #startBtn { padding:10px 20px; font-size:18px; margin-top:20px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <h1>🧩 Puzzle de Nosotros 🧩</h1>
+  <p>Disfruta de nuestra canción mientras armas el puzzle 🎵</p>
+
+  <button id="startBtn">▶️ Escuchar música y empezar puzzle</button>
+
+  <div id="puzzle"></div>
+  <button id="completarBtn" style="display:none;">✔️ Puzzle completado</button>
+
+  <div id="final">
+    <h1>GANASTE SEXX</h1>
+    <p>TE A M O</p>
+    <button id="siguienteBtn">➡ Ir al Juego de Adivinanzas</button>
+  </div>
+
+  <audio id="musica" src="cancion_puzzle.mp3" loop></audio>
+
+  <script>
+    const puzzle = document.getElementById("puzzle");
+    const startBtn = document.getElementById("startBtn");
+    const completarBtn = document.getElementById("completarBtn");
+    const final = document.getElementById("final");
+    const siguienteBtn = document.getElementById("siguienteBtn");
+    const musica = document.getElementById("musica");
+
+    // Crear piezas del puzzle
+    const piezas = [];
+    for (let y=0; y<3; y++) {
+      for (let x=0; x<3; x++) {
+        const pieza = document.createElement("div");
+        pieza.classList.add("pieza");
+        pieza.style.backgroundImage = "url('foto.jpg')";
+        pieza.style.backgroundPosition = `-${x*100}px -${y*100}px`;
+        pieza.draggable = true;
+        piezas.push(pieza);
+      }
+    }
+
+    // Evento para iniciar música y puzzle
+    startBtn.onclick = () => {
+      startBtn.style.display = "none";
+      puzzle.style.display = "grid";
+      completarBtn.style.display = "inline-block";
+      piezas.sort(() => Math.random() - 0.5);
+      piezas.forEach(p => puzzle.appendChild(p));
+      musica.play();
+    };
+
+    // Drag & Drop puzzle
+    let piezaArrastrada = null;
+    puzzle.addEventListener("dragstart", e => piezaArrastrada = e.target);
+    puzzle.addEventListener("dragover", e => e.preventDefault());
+    puzzle.addEventListener("drop", e => {
+      if (e.target.classList.contains("pieza")) {
+        const nodoTemp = document.createElement("div");
+        puzzle.insertBefore(nodoTemp, e.target);
+        puzzle.insertBefore(e.target, piezaArrastrada);
+        puzzle.insertBefore(piezaArrastrada, nodoTemp);
+        puzzle.removeChild(nodoTemp);
+      }
+    });
+
+    // Botón manual: marcar puzzle como completo
+    completarBtn.onclick = () => {
+      puzzle.style.display = "none";
+      completarBtn.style.display = "none";
+      final.style.display = "block";
+    };
+
+    // Botón para ir a adivinanzas
+    siguienteBtn.onclick = () => {
+      window.location.href = "adivinanza.html";
+    };
+  </script>
+</body>
+</html>

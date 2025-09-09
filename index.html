@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Terminal de Amor</title>
+  <style>
+    body {
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
+      padding: 20px;
+    }
+    #terminal {
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+  <script>
+    const mensajes = [
+      "> Iniciando conexión con el sistema...",
+      "> Buscando al usuario especial...",
+      "> Usuario encontrado: [PABLO MUSCULITOS] ❤️",
+      "> Cargando recuerdos... ██████████ 100%",
+      "> Autenticando el amor...",
+      "> Acceso concedido porque es fiel",
+      "> Mensaje secreto: Hoy verás como tu novia se vuelve una fucking programadora por amor...",
+      "> Dalee cheri qué esperassss"
+    ];
+
+    const terminal = document.getElementById("terminal");
+
+    let i = 0;
+    function escribirLinea() {
+      if (i < mensajes.length) {
+        const linea = document.createElement("div");
+        linea.textContent = mensajes[i];
+        terminal.appendChild(linea);
+        i++;
+        setTimeout(escribirLinea, 1500);
+      } else {
+        const link = document.createElement("a");
+        link.href = "puzzle.html";
+        link.textContent = "➡ Ir al Puzzle";
+        link.style.color = "#00ff00";
+        link.style.textDecoration = "underline";
+        terminal.appendChild(document.createElement("br"));
+        terminal.appendChild(link);
+      }
+    }
+
+    escribirLinea();
+  </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Juego de Adivinanzas</title>
+  <style>
+    body { font-family: Arial; text-align: center; background: #fff8f8; }
+    h1 { color: #c2185b; }
+    #juego { display: none; margin-top: 20px; }
+    #final { display: none; padding: 30px; }
+    #final h1 { font-size: 36px; color: #c2185b; }
+    #final p { font-size: 22px; color: #444; }
+    button { padding: 10px 20px; font-size: 18px; margin: 10px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>CHERI ADIVINO</h1>
+  <p>Haz clic para empezar y escuchar nuestra canción 🎵</p>
+  <button id="startBtn">▶️ Empezar Juego</button>
+
+  <div id="juego">
+    <div id="pregunta"></div>
+    <input type="text" id="respuesta" placeholder="Escribe tu respuesta">
+    <button id="enviarBtn">Enviar</button>
+  </div>
+
+  <div id="final">
+    <h1>Se acabó, pero me meteré a estudiar estoxd</h1>
+    <p>Eres lo más lindo lindo del universo</p>
+  </div>
+
+  <audio id="musica" src="cancion_adivinanza.mp3" loop></audio>
+
+  <script>
+    const startBtn = document.getElementById("startBtn");
+    const juego = document.getElementById("juego");
+    const preguntaDiv = document.getElementById("pregunta");
+    const respuestaInput = document.getElementById("respuesta");
+    const enviarBtn = document.getElementById("enviarBtn");
+    const final = document.getElementById("final");
+    const musica = document.getElementById("musica");
+
+    // Tus adivinanzas y respuestas
+    const preguntas = [
+      { pregunta: "¿Cuál es nuestro lugar favorito?", respuesta: "juntos" },
+      { pregunta: "¿Cómo mi ditorsión de la realidad te ve?", respuesta: "fuckboy" },
+      { pregunta: "¿Qué te gustaría que te regale?", respuesta: "play 5" }
+    ];
+    let indice = 0;
+
+    startBtn.onclick = () => {
+      startBtn.style.display = "none";
+      juego.style.display = "block";
+      musica.play(); // empieza música al hacer clic
+      mostrarPregunta();
+    };
+
+    function mostrarPregunta() {
+      if (indice < preguntas.length) {
+        preguntaDiv.textContent = preguntas[indice].pregunta;
+        respuestaInput.value = "";
+        respuestaInput.focus();
+      } else {
+        juego.style.display = "none";
+        final.style.display = "block";
+      }
+    }
+
+    enviarBtn.onclick = () => {
+      const respuesta = respuestaInput.value.trim().toLowerCase();
+      if (respuesta === preguntas[indice].respuesta.toLowerCase()) {
+        indice++;
+        mostrarPregunta();
+      } else {
+        alert("otra vez porque veo problemas que peligran nuestra relación");
+      }
+    };
+  </script>
+</body>
+</html>
